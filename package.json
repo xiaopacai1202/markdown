@@ -1,0 +1,47 @@
+{
+  "name": "markdown",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --fix",
+    "format": "prettier --write src/",
+    "backend": "json-server --watch db.json --port 3001",
+    "dev:full": "concurrently \"npm run backend\" \"npm run dev\""
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
+    "axios": "^1.11.0",
+    "element-plus": "^2.11.1",
+    "highlight.js": "^11.11.1",
+    "html2canvas": "1.4.1",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^5.0.2",
+    "lodash-es": "^4.17.21",
+    "marked": "^16.2.1",
+    "pinia": "^3.0.3",
+    "vue": "^3.5.18",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.31.0",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vue/eslint-config-prettier": "^10.2.0",
+    "concurrently": "^9.2.1",
+    "eslint": "^9.31.0",
+    "eslint-plugin-vue": "~10.3.0",
+    "globals": "^16.3.0",
+    "json-server": "1.0.0-beta.3",
+    "prettier": "3.6.2",
+    "unplugin-auto-import": "^20.1.0",
+    "unplugin-vue-components": "^29.0.0",
+    "vite": "^7.0.6",
+    "vite-plugin-vue-devtools": "^8.0.0"
+  }
+}

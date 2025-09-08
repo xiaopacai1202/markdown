@@ -1,0 +1,544 @@
+/* ==========  CSS 变量（亮色） ========== */
+:root,
+.light-theme {
+  --bg: #ffffff;
+  --text: #2c3e50;
+  --border: #eaecef;
+  --header-bg: #2c3e50;
+  --header-text: #ecf0f1;
+  --editor-bg: #f6f8fa;
+  --sidebar-bg: #f8f9fa;
+  --card: #ffffff;
+  --hover: #f5f7fa;
+  --active: #e3f2fd;
+  --code-bg: #f6f8fa;
+  --block-border: #dfe2e5;
+  --block-text: #6a737d;
+  --primary: #409eff;
+  --success: #67c23a;
+  --danger: #f56c6c;
+}
+
+/* ========== 暗色变量（只写一次） ========== */
+.dark-theme {
+  --bg: #1a1a1a;
+  --text: #e0e0e0;
+  --border: #404040;
+  --header-bg: #1f2937;
+  --header-text: #f3f4f6;
+  --editor-bg: #2d3748;
+  --sidebar-bg: #2d2d2d;
+  --card: #2d2d2d;
+  --hover: #3d3d3d;
+  --active: #374151;
+  --code-bg: #2d3748;
+  --block-border: #4a5568;
+  --block-text: #a0aec0;
+}
+
+/* ========== 全局重置 ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+html,
+body,
+#app {
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========== 顶部栏 ========== */
+.app-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: var(--header-bg);
+  color: var(--header-text);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 100;
+}
+
+.app-header h1 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.mobile-menu-toggle {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-right: 1rem;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ========== 主布局 ========== */
+.main-layout {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+.sidebar {
+  width: 280px;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  padding: 1rem;
+  overflow-y: auto;
+  transition: transform 0.3s;
+}
+
+.sidebar-hidden {
+  transform: translateX(-100%);
+  position: absolute;
+  height: 100%;
+  z-index: 90;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.close-sidebar {
+  display: none;
+}
+
+.sidebar-hidden .close-sidebar {
+  display: block;
+}
+
+.document-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.document-item {
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.document-item:hover {
+  background: var(--hover);
+}
+
+.document-item.active {
+  background: var(--active);
+  border-color: var(--primary);
+}
+
+.document-title {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.document-time {
+  font-size: 0.75rem;
+  color: var(--block-text);
+}
+
+.empty-tip {
+  text-align: center;
+  padding: 2rem;
+  color: var(--block-text);
+  font-style: italic;
+}
+
+.editor-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.document-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
+}
+
+.title-input :deep(.el-input__wrapper) {
+  box-shadow: none;
+  padding: 0;
+  background: transparent;
+}
+
+.document-meta {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--block-text);
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.auto-saving-indicator,
+.auto-saved-indicator {
+  font-size: 0.75rem;
+}
+
+.editor-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.editor-pane,
+.preview-pane {
+  flex: 1;
+  overflow: auto;
+}
+
+.editor-pane {
+  border-right: 1px solid var(--border);
+  background: var(--editor-bg);
+}
+
+.markdown-editor {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 1rem;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  background: transparent;
+  color: var(--text);
+}
+
+.html-preview {
+  padding: 1rem;
+  line-height: 1.6;
+}
+
+/* Markdown 预览基础样式 */
+.html-preview h1,
+.html-preview h2,
+.html-preview h3,
+.html-preview h4,
+.html-preview h5,
+.html-preview h6 {
+  margin: 1.5em 0 0.5em;
+  font-weight: 600;
+}
+
+.html-preview p {
+  margin-bottom: 1em;
+}
+
+.html-preview pre {
+  background: var(--code-bg);
+  padding: 1rem;
+  border-radius: 6px;
+  overflow: auto;
+  margin: 1em 0;
+}
+
+.html-preview code {
+  background: var(--code-bg);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+
+.html-preview blockquote {
+  margin: 1em 0;
+  padding-left: 1em;
+  border-left: 4px solid var(--block-border);
+  color: var(--block-text);
+}
+
+.html-preview table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+
+.html-preview th,
+.html-preview td {
+  border: 1px solid var(--table-border);
+  padding: 0.5em;
+}
+
+.html-preview th {
+  background: var(--table-header-bg);
+}
+/* ===== 暗色全局深灰按钮 ===== */
+.dark-theme {
+  /* 统一底色 */
+  --el-button-bg-color: #2d3748;          /* 默认深灰 */
+  --el-button-border-color: #4a5568;
+  --el-button-text-color: #e2e8f0;
+
+  /* hover / active 仅加深 */
+  --el-button-hover-bg-color: #1f2937;
+  --el-button-hover-border-color: #2d3748;
+  --el-button-active-bg-color: #111827;
+  --el-button-active-border-color: #1f2937;
+
+  /* 次要按钮同色系 */
+  --el-button-default-bg-color: #2d3748;
+  --el-button-default-border-color: #4a5568;
+  --el-button-default-text-color: #e2e8f0;
+  --el-button-default-hover-bg-color: #1f2937;
+  --el-button-default-hover-border-color: #2d3748;
+
+  /* 文字按钮也深灰 */
+  --el-button-text-color: #a0aec0;
+  --el-button-text-hover-color: #e2e8f0;
+
+  /* 禁用状态 */
+  --el-button-disabled-bg-color: #111827;
+  --el-button-disabled-text-color: #4a5568;
+  --el-button-disabled-border-color: #2d3748;
+
+  /* 图标按钮 */
+  --el-icon-color: #a0aec0;
+  --el-icon-hover-color: #e2e8f0;
+}
+
+/* ===== 让成功/危险/信息也降饱和度 ===== */
+.dark-theme .el-button--success {
+  --el-button-bg-color: #22543d;
+  --el-button-border-color: #2f855a;
+  --el-button-hover-bg-color: #1c4332;
+  --el-button-active-bg-color: #153625;
+}
+
+.dark-theme .el-button--danger {
+  --el-button-bg-color: #742a2a;
+  --el-button-border-color: #c53030;
+  --el-button-hover-bg-color: #5c2323;
+  --el-button-active-bg-color: #451919;
+}
+
+.dark-theme .el-button--info {
+  --el-button-bg-color: #2d3748;
+  --el-button-border-color: #4a5568;
+  --el-button-hover-bg-color: #1f2937;
+  --el-button-active-bg-color: #111827;
+}
+
+/* ===== 图标按钮 hover 更深 ===== */
+.dark-theme .el-button.is-circle:not(.is-disabled):hover {
+  background: var(--el-button-hover-bg-color);
+  border-color: var(--el-button-hover-border-color);
+}
+/* ===== 插件弹窗暗色适配 ===== */
+.dark-theme {
+  /* 弹窗外壳 */
+  --el-dialog-bg-color: #1f2937;
+  --el-dialog-text-color: #e2e8f0;
+  --el-dialog-border-color: #4a5568;
+
+  /* 头部/底部 */
+  --el-dialog-title-color: #e2e8f0;
+  --el-bg-color: #1f2937;
+  --el-border-color-lighter: #4a5568;
+
+  /* 插件项卡片 */
+  --el-fill-color-light: #2d3748;
+  --el-fill-color-lighter: #2d3748;
+  --el-text-color-primary: #e2e8f0;
+  --el-text-color-regular: #a0aec0;
+  --el-border-color-light: #4a5568;
+
+  /* 开关 */
+  --el-switch-on-color: #10b981;
+  --el-switch-off-color: #4a5568;
+}
+
+/* 插件列表卡片微调 */
+.dark-theme .plugin-item {
+  background: var(--el-fill-color-light);
+  border-color: var(--el-border-color-light);
+}
+
+.dark-theme .plugin-item:hover {
+  background: #374151;
+}
+
+/* 开关图标颜色 */
+.dark-theme .el-switch__core .el-switch__action {
+  background: #e2e8f0;
+}
+/* ========== 加载遮罩 ========== */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(var(--bg), 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(2px);
+}
+
+.loading-content {
+  text-align: center;
+  color: var(--text);
+}
+
+.loading-content .el-icon {
+  color: var(--primary);
+  margin-bottom: 1rem;
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========== 字数统计悬浮泡 ========== */
+.word-count-display {
+  position: fixed;
+  bottom: 70px;
+  right: 15px;
+  background: var(--primary);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 14px;
+  font-size: 12px;
+  display: flex;
+  gap: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 98;
+}
+
+/* ========== 移动端 ========== */
+@media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: block;
+  }
+
+  .sidebar-toggle {
+    display: none !important;
+  }
+
+  .app-header {
+    padding: 0.5rem;
+    height: 50px;
+  }
+
+  .app-header h1 {
+    font-size: 1.1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+  }
+
+  .desktop-toolbar {
+    display: none !important;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 80%;
+    max-width: 300px;
+    z-index: 200;
+    transform: translateX(-100%);
+  }
+
+  .mobile-sidebar-visible {
+    transform: translateX(0);
+  }
+
+  .mobile-sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 190;
+  }
+
+  .editor-content {
+    flex-direction: column;
+  }
+
+  .hidden-on-mobile {
+    display: none;
+  }
+
+  .mobile-view-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    background: var(--card);
+    border-radius: 20px;
+    padding: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .markdown-editor,
+  .html-preview {
+    font-size: 16px;
+  }
+
+  .word-count-display {
+    bottom: 65px;
+    right: 10px;
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+}
+
+/* ========== 超小屏 ========== */
+@media (max-width: 480px) {
+  .app-header h1 {
+    max-width: 100px;
+    font-size: 1rem;
+  }
+
+  .header-actions .el-button {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+  }
+
+}
